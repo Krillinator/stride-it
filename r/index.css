@@ -5,19 +5,24 @@
   --stroke: #ffffff1f;
   --text: #eaf0ff;
   --muted: #b8c4e3;
-
-  /* T accent (warm “warning / integrity” vibe) */
-  --accent1: #ffd36e;
-  --accent2: #ff7a7a;
-  --accentGlow: #ffb84a;
+  --accent1: #22d3ee; /* cool cyan */
+  --accent2: #94a3b8; /* slate gray */
 }
 
 body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(1200px 600px at 20% 10%, #4a3a10 0%, transparent 60%),
-    radial-gradient(900px 500px at 85% 30%, #4b1f2a 0%, transparent 55%),
+    radial-gradient(
+      1200px 600px at 20% 10%,
+      rgba(110, 231, 255, 0.18) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 85% 30%,
+      rgba(192, 132, 252, 0.15) 0%,
+      transparent 55%
+    ),
     linear-gradient(160deg, var(--bg1), var(--bg2));
 }
 
@@ -46,6 +51,7 @@ body {
   letter-spacing: 0.02em;
   transition: color 0.25s ease;
 }
+
 .brand-link::after {
   content: "";
   position: absolute;
@@ -58,9 +64,11 @@ body {
   transform-origin: left;
   transition: transform 0.25s ease;
 }
+
 .brand-link:hover {
   color: #fff;
 }
+
 .brand-link:hover::after {
   transform: scaleX(1);
 }
@@ -72,16 +80,6 @@ body {
   font-weight: 600;
 }
 
-/* Optional: a tiny “tamper” highlight */
-.badge-soft strong,
-h1 span.accent {
-  color: var(--accent1);
-}
-
-.is-hidden {
-  display: none !important;
-}
-
 .lab-note code {
   color: #eaf0ff;
   background: #0b122055;
@@ -91,13 +89,14 @@ h1 span.accent {
 }
 
 .form-control[readonly] {
-  background-color: #1a2338;
+  background-color: #1a2338; /* darker than normal */
   border-color: #ffffff22;
   color: #8fa3c7;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 1;
+  opacity: 1; /* prevent Bootstrap fade */
 }
+
 .form-control[readonly]:focus {
   box-shadow: none;
   border-color: #ffffff22;

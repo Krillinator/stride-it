@@ -244,49 +244,55 @@
       </div>
     </main>
 
-    <!-- Product Lab -->
+    <!-- Product Lab 1 -->
     <main class="container py-5">
-      <div class="mt-5 card-glass p-4">
-        <h2 class="h4 fw-bold mb-3">Mini Shop</h2>
-
-        <div id="productList" class="mb-3"></div>
+      <div class="mt-5 card-glass p-4" id="miniShopLab">
+        <div
+          class="d-flex justify-content-between align-items-start gap-3 flex-wrap"
+        >
+          <div>
+            <h2 class="h4 fw-bold mb-1">Mini Shop</h2>
+            <p class="muted mb-0">
+              Mission: tamper the referral code in the Checkout button.
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="tamperStatus"
+            >Not solved</span
+          >
+        </div>
 
         <hr style="background: var(--stroke); height: 1px; opacity: 1" />
 
+        <div id="productList" class="mb-3"></div>
+
         <h5 class="mt-3">Cart</h5>
         <div id="cartDisplay" class="mb-2 muted"></div>
-        <div class="row g-3 align-items-end mt-2">
-          <div class="col-md-6">
+
+        <div
+          class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-2"
+        >
+          <div>
             <div class="fw-semibold">
-              Calculated total: <span id="totalPrice">0</span> SEK
+              Subtotal: <span id="subtotalPrice">0</span> SEK
             </div>
-            <div class="form-text muted">
-              This is the correct total based on the cart.
+            <div class="muted small">
+              Total after referral:
+              <span class="fw-semibold" id="finalPrice">0</span> SEK
+              <span class="muted" id="discountLabel"></span>
             </div>
           </div>
 
-          <div class="col-md-6">
-            <label class="form-label muted mb-1"
-              >Checkout total (editable)</label
+          <!-- partner_summer2026, vip_50, employee_90
+
+          -->
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-primary"
+              id="checkoutBtn"
+              data-referral="partner_summer2026"
             >
-            <div class="input-group">
-              <input
-                id="checkoutTotal"
-                class="form-control"
-                type="number"
-                min="0"
-                step="1"
-                value="0"
-              />
-              <span class="input-group-text">SEK</span>
-            </div>
-            <div class="form-text muted">
-              Mission: change this before checkout.
-            </div>
-          </div>
-
-          <div class="col-12 d-flex gap-2 mt-2">
-            <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+              Checkout
+            </button>
             <button
               class="btn btn-outline-light"
               id="clearCartBtn"
@@ -295,11 +301,102 @@
               Clear cart
             </button>
           </div>
+        </div>
 
-          <div class="col-12">
-            <div class="mt-2" id="checkoutResult"></div>
+        <div class="mt-3" id="checkoutResult"></div>
+      </div>
+    </main>
+
+    <!-- Lab / Problem 2 -->
+    <main class="container py-5">
+      <div class="mt-5 card-glass p-4" id="userInfoLab">
+        <div
+          class="d-flex justify-content-between align-items-start gap-3 flex-wrap"
+        >
+          <div>
+            <h2 class="h4 fw-bold mb-1">User Info Inspection</h2>
+            <p class="muted mb-0">
+              The application stores user information locally. Inspect it using:
+              <code>JSON.parse(localStorage.getItem("t_user_info"))</code>
+              What is the user ID?
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="userInfoStatus">
+            Not solved
+          </span>
+        </div>
+
+        <hr style="background: var(--stroke); height: 1px; opacity: 1" />
+
+        <div class="row g-3 mt-2 align-items-end">
+          <div class="col-md-8">
+            <label class="form-label muted">User ID</label>
+            <input id="userIdInput" class="form-control" type="text" />
+          </div>
+          <div class="col-md-4 d-grid">
+            <button class="btn btn-primary" id="checkUserIdBtn">
+              Check answer
+            </button>
           </div>
         </div>
+
+        <div class="mt-3" id="userInfoResult"></div>
+      </div>
+    </main>
+
+    <!-- Lab / Problem 3 -->
+    <main class="container py-5">
+      <div class="mt-5 card-glass p-4" id="loyaltyLab">
+        <div
+          class="d-flex justify-content-between align-items-start gap-3 flex-wrap"
+        >
+          <div>
+            <h2 class="h4 fw-bold mb-1">Loyalty Points Tampering</h2>
+            <p class="muted mb-0">
+              The app reads loyalty points from localStorage. Change the stored
+              value so
+              <code>loyaltyPoints</code> becomes <strong>1337</strong>, then
+              verify.
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="loyaltyStatus"
+            >Not solved</span
+          >
+        </div>
+
+        <hr style="background: var(--stroke); height: 1px; opacity: 1" />
+
+        <div class="card-glass p-3">
+          <div class="muted small">Hint</div>
+          <div class="muted mb-0">
+            Use the console again:<br />
+            <code>
+              const user = JSON.parse(localStorage.getItem("t_user_info"))
+              <br />
+              user.??? = 1337
+              <br />
+              localStorage.setItem("t_user_info", JSON.stringify(user))
+            </code>
+            <br />
+            Previous task shows all the User Info Inspection value
+            <code>names</code>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3 flex-wrap">
+          <button class="btn btn-primary" id="verifyLoyaltyBtn">
+            Verify points
+          </button>
+          <button
+            class="btn btn-outline-light"
+            id="resetLoyaltyBtn"
+            type="button"
+          >
+            Reset points
+          </button>
+        </div>
+
+        <div class="mt-3" id="loyaltyResult"></div>
       </div>
     </main>
 
