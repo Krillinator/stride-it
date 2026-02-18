@@ -1,17 +1,17 @@
-<!-- i/index.html -->
+<!-- e/index.html -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>I — Information Disclosure | STRIDE IT</title>
+    <title>E — Elevation of Privilege | STRIDE IT</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="i.css" />
+    <!-- no e.css (you said you fixed CSS already) -->
   </head>
 
   <body>
@@ -25,7 +25,7 @@
 
         <div class="d-flex gap-2 align-items-center">
           <span class="badge badge-soft rounded-pill" id="letterScore"
-            >I: 0/3</span
+            >E: 0/3</span
           >
           <span class="badge badge-soft rounded-pill" id="totalScore"
             >Total: 0/18</span
@@ -38,10 +38,10 @@
       <!-- Header -->
       <div class="row g-4 align-items-center">
         <div class="col-lg-7">
-          <h1 class="display-6 fw-bold mb-2">I — Information Disclosure</h1>
+          <h1 class="display-6 fw-bold mb-2">E — Elevation of Privilege</h1>
           <p class="muted mb-0">
-            Information Disclosure happens when sensitive data is exposed to
-            someone who should not see it. Confidentiality is the target.
+            Elevation of Privilege is when a user gains permissions they should
+            not have. Authorization is the target.
           </p>
         </div>
 
@@ -52,10 +52,10 @@
               viewBox="0 0 640 220"
               class="w-100"
               role="img"
-              aria-label="Information disclosure illustration"
+              aria-label="Elevation of privilege illustration"
             >
               <defs>
-                <linearGradient id="gI" x1="0" x2="1">
+                <linearGradient id="gE" x1="0" x2="1">
                   <stop
                     offset="0"
                     stop-color="var(--accent1)"
@@ -67,99 +67,129 @@
                     stop-opacity=".25"
                   />
                 </linearGradient>
+                <filter id="glowE">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
               </defs>
 
+              <!-- background panel -->
               <rect
                 x="10"
                 y="10"
                 width="620"
                 height="200"
                 rx="18"
-                fill="url(#gI)"
+                fill="url(#gE)"
                 opacity=".35"
               />
 
-              <!-- Left: confidential file -->
+              <!-- Left: user -->
               <rect
-                x="60"
+                x="55"
                 y="55"
-                width="240"
+                width="220"
                 height="120"
                 rx="16"
                 fill="#0b122055"
                 stroke="#ffffff22"
               />
               <text
-                x="85"
+                x="80"
                 y="92"
                 fill="#eaf0ff"
                 font-size="16"
                 font-family="system-ui"
                 font-weight="700"
               >
-                Confidential.txt
+                User
               </text>
               <rect
-                x="85"
+                x="80"
                 y="110"
-                width="190"
-                height="12"
-                rx="6"
-                fill="#ffffff1f"
-              />
-              <rect
-                x="85"
-                y="132"
                 width="160"
                 height="12"
                 rx="6"
                 fill="#ffffff1f"
               />
+              <text
+                x="81"
+                y="150"
+                fill="#b8c4e3"
+                font-size="13"
+                font-family="system-ui"
+              >
+                Role: customer
+              </text>
+
+              <!-- Right: admin -->
               <rect
-                x="85"
-                y="154"
-                width="175"
+                x="365"
+                y="55"
+                width="220"
+                height="120"
+                rx="16"
+                fill="#0b122055"
+                stroke="#ffffff22"
+              />
+              <text
+                x="390"
+                y="92"
+                fill="#eaf0ff"
+                font-size="16"
+                font-family="system-ui"
+                font-weight="700"
+              >
+                Admin
+              </text>
+              <rect
+                x="390"
+                y="110"
+                width="165"
                 height="12"
                 rx="6"
                 fill="#ffffff1f"
               />
+              <text
+                x="391"
+                y="150"
+                fill="#b8c4e3"
+                font-size="13"
+                font-family="system-ui"
+              >
+                Role: admin
+              </text>
 
-              <!-- Right: “eye” showing exposure -->
-              <ellipse
-                cx="470"
-                cy="115"
-                rx="80"
-                ry="42"
-                fill="#ffffff10"
-                stroke="var(--accent1)"
-                stroke-width="3"
-              />
-              <circle
-                cx="470"
-                cy="115"
-                r="18"
-                fill="var(--accent2)"
-                opacity=".9"
-              />
-              <circle cx="470" cy="115" r="7" fill="#0b1220" opacity=".7" />
-
-              <!-- Arrow -->
+              <!-- ladder / arrow up -->
               <path
-                d="M315 115 C340 115 360 115 385 115"
+                d="M300 165 L300 75"
                 stroke="var(--accent1)"
-                stroke-width="6"
+                stroke-width="7"
                 stroke-linecap="round"
-                opacity=".7"
+                opacity=".75"
               />
               <path
-                d="M370 103 L395 115 L370 127"
+                d="M288 92 L300 75 L312 92"
                 fill="none"
                 stroke="var(--accent1)"
-                stroke-width="6"
+                stroke-width="7"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                opacity=".7"
+                opacity=".75"
               />
+
+              <text
+                x="245"
+                y="195"
+                fill="#b8c4e3"
+                font-size="13"
+                font-family="system-ui"
+              >
+                User becomes admin
+              </text>
             </svg>
           </div>
         </div>
@@ -171,8 +201,8 @@
           <div class="card-glass p-4 h-100">
             <h2 class="h5 fw-semibold mb-2">What it means</h2>
             <p class="muted mb-0">
-              Sensitive information is exposed to someone who shouldn’t have
-              access (leaks, over-sharing, weak access control).
+              A normal user reaches admin-only actions by abusing weak
+              authorization, insecure defaults, or missing role checks.
             </p>
           </div>
         </div>
@@ -181,8 +211,8 @@
           <div class="card-glass p-4 h-100">
             <h2 class="h5 fw-semibold mb-2">Why it matters</h2>
             <p class="muted mb-0">
-              Exposed data enables identity theft, account takeover, fraud, and
-              compliance issues (confidentiality breaks).
+              Once privileges increase, attackers can change settings, access
+              other users’ data, or take over the entire system.
             </p>
           </div>
         </div>
@@ -191,11 +221,20 @@
           <div class="card-glass p-4 h-100">
             <h2 class="h5 fw-semibold mb-2">How to mitigate</h2>
             <p class="muted mb-0">
-              Enforce access control, minimize returned data, mask secrets, and
-              log safely. Never ship keys or private data to clients.
+              Enforce server-side authorization checks, follow least privilege,
+              separate duties, and never trust roles coming from the client.
             </p>
           </div>
         </div>
+      </div>
+
+      <!-- Placeholder for labs -->
+      <div class="mt-5 card-glass p-4">
+        <h2 class="h4 fw-bold mb-1">Labs (coming next)</h2>
+        <p class="muted mb-0">
+          We’ll build three small scenarios showing how weak role checks and
+          client-trusted flags lead to admin access.
+        </p>
       </div>
     </main>
 

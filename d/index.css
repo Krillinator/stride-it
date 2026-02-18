@@ -6,24 +6,24 @@
   --text: #eaf0ff;
   --muted: #9fb3d9;
 
-  /* I – Information Disclosure theme */
-  --accent1: #c084fc; /* soft violet */
-  --accent2: #e9d5ff; /* pale lavender */
+  /* D – Denial of Service theme (overload / redline) */
+  --accent1: #fb7185; /* hot rose */
+  --accent2: #f97316; /* overload orange */
 }
 
-/* Background glow (subtle, cold, airy) */
+/* Background glow (pressure, heat, disruption) */
 body {
   min-height: 100vh;
   color: var(--text);
   background:
     radial-gradient(
       1200px 600px at 20% 10%,
-      rgba(124, 58, 237, 0.18) 0%,
+      rgba(251, 113, 133, 0.16) 0%,
       transparent 60%
     ),
     radial-gradient(
       900px 500px at 85% 30%,
-      rgba(76, 29, 149, 0.64) 0%,
+      rgba(249, 115, 22, 0.14) 0%,
       transparent 55%
     ),
     linear-gradient(160deg, var(--bg1), var(--bg2));

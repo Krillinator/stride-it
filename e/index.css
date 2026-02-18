@@ -6,24 +6,24 @@
   --text: #eaf0ff;
   --muted: #9fb3d9;
 
-  /* I – Information Disclosure theme */
-  --accent1: #c084fc; /* soft violet */
-  --accent2: #e9d5ff; /* pale lavender */
+  /* E – Elevation of Privilege theme (authority / access) */
+  --accent1: #10b981; /* emerald */
+  --accent2: #065f46; /* deep forest */
 }
 
-/* Background glow (subtle, cold, airy) */
+/* Background glow */
 body {
   min-height: 100vh;
   color: var(--text);
   background:
     radial-gradient(
       1200px 600px at 20% 10%,
-      rgba(124, 58, 237, 0.18) 0%,
+      rgba(16, 185, 129, 0.16) 0%,
       transparent 60%
     ),
     radial-gradient(
       900px 500px at 85% 30%,
-      rgba(76, 29, 149, 0.64) 0%,
+      rgba(6, 95, 70, 0.14) 0%,
       transparent 55%
     ),
     linear-gradient(160deg, var(--bg1), var(--bg2));
