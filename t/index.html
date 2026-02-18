@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>T — Tampering | STRIDE IT</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <div class="topbar sticky-top">
+      <div
+        class="container py-3 d-flex justify-content-between align-items-center"
+      >
+        <div class="fw-semibold">
+          <a href="../index.html" class="brand-link">STRIDE IT</a>
+        </div>
+
+        <div class="d-flex gap-2 align-items-center">
+          <span class="badge badge-soft rounded-pill" id="letterScore"
+            >T: 0/3</span
+          >
+          <span class="badge badge-soft rounded-pill" id="totalScore"
+            >Total: 0/18</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <main class="container py-5">
+      <!-- Header -->
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-7">
+          <h1 class="display-6 fw-bold mb-2">T — Tampering</h1>
+          <p class="muted mb-0">
+            Tampering is about unauthorized changes to data—inputs, requests,
+            files, or database records. Integrity is the target.
+          </p>
+        </div>
+
+        <!-- “image” (inline SVG) -->
+        <div class="col-lg-5">
+          <div class="card-glass p-3">
+            <svg
+              viewBox="0 0 640 220"
+              class="w-100"
+              role="img"
+              aria-label="Data tampering illustration"
+            >
+              <defs>
+                <linearGradient id="g" x1="0" x2="1">
+                  <stop
+                    offset="0"
+                    stop-color="var(--accent1)"
+                    stop-opacity=".55"
+                  />
+                  <stop
+                    offset="1"
+                    stop-color="var(--accent2)"
+                    stop-opacity=".25"
+                  />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <rect
+                x="10"
+                y="10"
+                width="620"
+                height="200"
+                rx="18"
+                fill="url(#g)"
+                opacity=".35"
+              />
+
+              <!-- Left: “original data” card -->
+              <rect
+                x="40"
+                y="55"
+                width="230"
+                height="120"
+                rx="16"
+                fill="#0b122055"
+                stroke="#ffffff22"
+              />
+              <text
+                x="60"
+                y="92"
+                fill="#eaf0ff"
+                font-size="16"
+                font-family="system-ui"
+                font-weight="700"
+              >
+                Data (expected)
+              </text>
+              <rect
+                x="60"
+                y="110"
+                width="190"
+                height="12"
+                rx="6"
+                fill="#ffffff1f"
+              />
+              <rect
+                x="60"
+                y="132"
+                width="160"
+                height="12"
+                rx="6"
+                fill="#ffffff1f"
+              />
+              <rect
+                x="60"
+                y="154"
+                width="175"
+                height="12"
+                rx="6"
+                fill="#ffffff1f"
+              />
+
+              <!-- Right: “tampered data” card -->
+              <rect
+                x="370"
+                y="55"
+                width="230"
+                height="120"
+                rx="16"
+                fill="#0b122055"
+                stroke="#ffffff22"
+              />
+              <text
+                x="390"
+                y="92"
+                fill="#eaf0ff"
+                font-size="16"
+                font-family="system-ui"
+                font-weight="700"
+              >
+                Data (modified)
+              </text>
+
+              <!-- “changed lines” -->
+              <rect
+                x="390"
+                y="110"
+                width="190"
+                height="12"
+                rx="6"
+                fill="#ffffff1f"
+              />
+              <rect
+                x="390"
+                y="132"
+                width="140"
+                height="12"
+                rx="6"
+                fill="#ffffff1f"
+              />
+              <rect
+                x="390"
+                y="154"
+                width="175"
+                height="12"
+                rx="6"
+                fill="#ffffff1f"
+              />
+
+              <!-- Red strike to indicate alteration -->
+              <path
+                d="M400 138 L565 120"
+                stroke="var(--accent2)"
+                stroke-width="6"
+                stroke-linecap="round"
+                opacity=".85"
+                filter="url(#glow)"
+              />
+
+              <!-- Middle: “in transit” arrow + wrench/pen icon-ish -->
+              <path
+                d="M285 115 C310 115 330 115 355 115"
+                stroke="var(--accent1)"
+                stroke-width="6"
+                stroke-linecap="round"
+                opacity=".7"
+              />
+              <path
+                d="M340 103 L365 115 L340 127"
+                fill="none"
+                stroke="var(--accent1)"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity=".7"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Three informational sections -->
+      <div class="row g-4 mt-1">
+        <div class="col-lg-4">
+          <div class="card-glass p-4 h-100">
+            <h2 class="h5 fw-semibold mb-2">What it means</h2>
+            <p class="muted mb-0">
+              Tampering is when someone changes data without permission—editing
+              a request, modifying a file, or altering a database record.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-glass p-4 h-100">
+            <h2 class="h5 fw-semibold mb-2">Why it matters</h2>
+            <p class="muted mb-0">
+              If data integrity fails, you can't trust prices, permissions,
+              logs, or decisions. Small changes can create big real-world
+              consequences.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-glass p-4 h-100">
+            <h2 class="h5 fw-semibold mb-2">How to mitigate</h2>
+            <p class="muted mb-0">
+              Validate inputs server-side, use parameterized queries, enforce
+              authorization, and protect data with hashes/signatures and strong
+              access controls.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Product Lab -->
+    <main class="container py-5">
+      <div class="mt-5 card-glass p-4">
+        <h2 class="h4 fw-bold mb-3">Mini Shop</h2>
+
+        <div id="productList" class="mb-3"></div>
+
+        <hr style="background: var(--stroke); height: 1px; opacity: 1" />
+
+        <h5 class="mt-3">Cart</h5>
+        <div id="cartDisplay" class="mb-2 muted"></div>
+        <div class="row g-3 align-items-end mt-2">
+          <div class="col-md-6">
+            <div class="fw-semibold">
+              Calculated total: <span id="totalPrice">0</span> SEK
+            </div>
+            <div class="form-text muted">
+              This is the correct total based on the cart.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label muted mb-1"
+              >Checkout total (editable)</label
+            >
+            <div class="input-group">
+              <input
+                id="checkoutTotal"
+                class="form-control"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+              />
+              <span class="input-group-text">SEK</span>
+            </div>
+            <div class="form-text muted">
+              Mission: change this before checkout.
+            </div>
+          </div>
+
+          <div class="col-12 d-flex gap-2 mt-2">
+            <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+            <button
+              class="btn btn-outline-light"
+              id="clearCartBtn"
+              type="button"
+            >
+              Clear cart
+            </button>
+          </div>
+
+          <div class="col-12">
+            <div class="mt-2" id="checkoutResult"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="./product.js"></script>
+  </body>
+</html>

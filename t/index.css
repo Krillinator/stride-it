@@ -1,0 +1,100 @@
+:root {
+  --bg1: #0b1220;
+  --bg2: #0e1a33;
+  --card: #0f1b34cc;
+  --stroke: #ffffff1f;
+  --text: #eaf0ff;
+  --muted: #b8c4e3;
+
+  /* T accent (warm “warning / integrity” vibe) */
+  --accent1: #ffd36e;
+  --accent2: #ff7a7a;
+  --accentGlow: #ffb84a;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% 10%, #4a3a10 0%, transparent 60%),
+    radial-gradient(900px 500px at 85% 30%, #4b1f2a 0%, transparent 55%),
+    linear-gradient(160deg, var(--bg1), var(--bg2));
+}
+
+.topbar {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--stroke);
+  background: linear-gradient(180deg, #0b1220cc, transparent);
+}
+
+.card-glass {
+  border: 1px solid var(--stroke);
+  background: linear-gradient(180deg, var(--card), #0b1220aa);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px #00000055;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.brand-link {
+  text-decoration: none;
+  color: var(--text);
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.02em;
+  transition: color 0.25s ease;
+}
+.brand-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.brand-link:hover {
+  color: #fff;
+}
+.brand-link:hover::after {
+  transform: scaleX(1);
+}
+
+.badge-soft {
+  border: 1px solid #ffffff26;
+  background: #0b122055;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Optional: a tiny “tamper” highlight */
+.badge-soft strong,
+h1 span.accent {
+  color: var(--accent1);
+}
+
+.lab-note code {
+  color: #eaf0ff;
+  background: #0b122055;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--stroke);
+}
+
+.form-control[readonly] {
+  background-color: #1a2338;
+  border-color: #ffffff22;
+  color: #8fa3c7;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 1;
+}
+.form-control[readonly]:focus {
+  box-shadow: none;
+  border-color: #ffffff22;
+}
