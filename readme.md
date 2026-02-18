@@ -33,8 +33,6 @@ It categorizes threats into:
 
 <img width="1355" height="595" alt="Screenshot 2026-02-18 at 21 59 29" src="https://github.com/user-attachments/assets/2372e8f9-9378-4d2f-9b89-456f84f331c5" />
 
-<img width="1364" height="179" alt="Screenshot 2026-02-18 at 22 03 44" src="https://github.com/user-attachments/assets/b477ce54-9dc7-4e10-a18a-283d96efab5c" /> 
-
 ---
 
 ## Learning Goal
