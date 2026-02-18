@@ -4,7 +4,7 @@ An interactive learning experience for understanding the STRIDE threat modeling 
 
 STRIDE IT helps learners explore security threats through short scenarios, quick checks, and mitigation thinking — one letter at a time.
 
-<img width="1355" height="595" alt="Screenshot 2026-02-18 at 21 59 29" src="https://github.com/user-attachments/assets/2372e8f9-9378-4d2f-9b89-456f84f331c5" />
+<img width="788" height="363" alt="Screenshot 2026-02-18 at 22 01 39" src="https://github.com/user-attachments/assets/e6bb5bfe-a886-4799-ab8e-8974de662a3c" />
 
 ---
 
@@ -21,6 +21,8 @@ It categorizes threats into:
 - **D** — Denial of Service
 - **E** — Elevation of Privilege
 
+
+
 ---
 
 ## Features
@@ -28,8 +30,10 @@ It categorizes threats into:
 - Interactive STRIDE tiles
 - Per-letter scenario challenges
 - Persistent progress tracking (localStorage)
-- Animated, modern UI
-- Premium dark design aesthetic
+
+<img width="1355" height="595" alt="Screenshot 2026-02-18 at 21 59 29" src="https://github.com/user-attachments/assets/2372e8f9-9378-4d2f-9b89-456f84f331c5" />
+
+<img width="1364" height="179" alt="Screenshot 2026-02-18 at 22 03 44" src="https://github.com/user-attachments/assets/b477ce54-9dc7-4e10-a18a-283d96efab5c" /> 
 
 ---
 
@@ -45,7 +49,7 @@ Instead of reacting to incidents, STRIDE IT encourages proactive security thinki
 
 - HTML5
 - CSS3 (custom animations + gradients)
-- Vanilla JavaScript
+- Vanilla JavaScript (for 'safe' client side labboration)
 - Bootstrap (layout utilities)
 
 ---
