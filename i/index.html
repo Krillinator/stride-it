@@ -125,7 +125,7 @@
 
               <!-- Right: “eye” showing exposure -->
               <ellipse
-                cx="470"
+                cx="490"
                 cy="115"
                 rx="80"
                 ry="42"
@@ -134,13 +134,13 @@
                 stroke-width="3"
               />
               <circle
-                cx="470"
+                cx="480"
                 cy="115"
                 r="18"
                 fill="var(--accent2)"
                 opacity=".9"
               />
-              <circle cx="470" cy="115" r="7" fill="#0b1220" opacity=".7" />
+              <circle cx="479" cy="115" r="7" fill="#0b1220" opacity=".7" />
 
               <!-- Arrow -->
               <path
@@ -195,6 +195,114 @@
             </p>
           </div>
         </div>
+      </div>
+
+      <!-- Lab 1 -->
+      <div class="mt-4 card-glass p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="h4 fw-bold mb-1">Raw Database Dump</h2>
+            <p class="muted mb-0">
+              A debug endpoint exposes database rows. Identify what the core
+              flaw is.
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="lab1Status"
+            >Not solved</span
+          >
+        </div>
+
+        <hr
+          style="
+            height: 1px;
+            background: var(--stroke);
+            opacity: 1;
+            margin: 1.25rem 0;
+          "
+        />
+
+        <p class="fw-semibold mb-2">Endpoint response:</p>
+
+        <pre class="terminal-box mb-3"><code>GET /debug/users
+
+        id | email               | password_hash    | reset_token      | last_login_ip
+        1  | ad...@corp.com      | md5...           | 9f83a...         | 83...
+        2  | al...@corp.com      | md5...           | 1ab44...         | 83...
+        3  | bj...@corp.com      | md5...           | 3da82...         | 84...
+        </code></pre>
+
+        <div class="mt-3" id="lab2Result"></div>
+      </div>
+
+      <!-- Lab 2 -->
+      <div class="mt-4 card-glass p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="h4 fw-bold mb-1">Encoders</h2>
+            <p class="muted mb-0">
+              While scouring the logs... you notice an encoded password...
+              <code>bXlzdXBlcnNlY3JldHBhcw==</code>
+
+              hint: base64
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="lab2Status">
+            Not solved
+          </span>
+        </div>
+
+        <hr
+          style="
+            height: 1px;
+            background: var(--stroke);
+            opacity: 1;
+            margin: 1.25rem 0;
+          "
+        />
+
+        <p class="fw-semibold mb-2">Decoding unsafe encoded passwords:</p>
+
+        <pre
+          class="terminal-box mb-3"
+        >What's the real <code>Password?</code></pre>
+
+        <div class="mt-3" id="lab1Result"></div>
+      </div>
+
+      <!-- Lab 3 -->
+      <div class="mt-4 card-glass p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="h4 fw-bold mb-1">Tokens & Leaks</h2>
+            <p class="muted mb-0">
+              Tokens are sent through a microservice architecture through as a
+              JWT.
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="lab3Status"
+            >Not solved</span
+          >
+        </div>
+
+        <hr
+          style="
+            height: 1px;
+            background: var(--stroke);
+            opacity: 1;
+            margin: 1.25rem 0;
+          "
+        />
+
+        <p class="fw-semibold mb-2">JWT payload:</p>
+
+        The client and the backend passes the following token:
+        <code
+          >eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4iLCJwYXNzd29yZCI6InN1cGVyc2VjcmV0Iiwic3NuIjoiMTk5MDAxMDEtMTIzNCJ9.GcU68dKgX4xq01UJRypZFMdxKRlsxGFW4og8prgqDxc</code
+        >
+
+        What's the user's password? [INPUT] hint on error: submit
+
+        <div class="mt-3" id="lab3Result"></div>
       </div>
     </main>
 
