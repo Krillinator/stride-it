@@ -101,3 +101,16 @@ body {
   box-shadow: none;
   border-color: #ffffff22;
 }
+
+.terminal-box {
+  background: #0b0f1a;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  height: 200px;
+  overflow-y: auto;
+  color: #9ef7b8;
+  box-shadow: inset 0 0 20px #00000066;
+}

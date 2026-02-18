@@ -274,6 +274,139 @@
       </div>
     </main>
 
+    <!-- Activity Log Lab -->
+    <main class="container py-5">
+      <div class="mt-5 card-glass p-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="h4 fw-bold mb-0">System Activity Log</h2>
+          <span class="badge badge-soft rounded-pill" id="logStatus">
+            Not solved
+          </span>
+        </div>
+
+        <p class="muted mt-2 mb-3">
+          Every action on this page is logged below.
+        </p>
+
+        <div id="logTerminal" class="terminal-box mb-3"></div>
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary btn-sm" id="fakeActionBtn">
+            Approve Invoice
+          </button>
+          <button class="btn btn-outline-light btn-sm" id="clearLogBtn">
+            Clear Log
+          </button>
+        </div>
+
+        <div class="form-text muted mt-3">
+          Mission: perform an action — then remove the evidence.
+        </div>
+
+        <div class="mt-3" id="logResult"></div>
+      </div>
+    </main>
+
+    <!-- Lab 2-->
+    <main class="container py-5">
+      <div class="mt-4 card-glass p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="h4 fw-bold mb-1">Task 2 — Missing Audit Log</h2>
+            <p class="muted mb-0">
+              An administrator deletes a customer account. Later, they deny ever
+              doing it. There is no audit log entry for the deletion.
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="quiz2Status">
+            Not solved
+          </span>
+        </div>
+
+        <hr
+          style="
+            height: 1px;
+            background: var(--stroke);
+            opacity: 1;
+            margin: 1.25rem 0;
+          "
+        />
+
+        <p class="fw-semibold">What failed in this system?</p>
+
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-outline-light quiz2-option">
+            A) Authentication
+          </button>
+          <button class="btn btn-outline-light quiz2-option">
+            B) Authorization
+          </button>
+          <button
+            class="btn btn-outline-light quiz2-option"
+            data-correct="true"
+          >
+            C) Audit logging / Non-repudiation
+          </button>
+          <button class="btn btn-outline-light quiz2-option">
+            D) Encryption
+          </button>
+        </div>
+
+        <div class="mt-3" id="quiz2Result"></div>
+      </div>
+    </main>
+
+    <!-- Lab 3-->
+    <main class="container py-5">
+      <div class="mt-4 card-glass p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="h4 fw-bold mb-1">Task 3 — Log Manipulation</h2>
+            <p class="muted mb-0">
+              A user performs a transfer. Later, they edit the log file and
+              remove the entry. The system has no way to detect that logs were
+              changed.
+            </p>
+          </div>
+          <span class="badge badge-soft rounded-pill" id="quiz3Status">
+            Not solved
+          </span>
+        </div>
+
+        <hr
+          style="
+            height: 1px;
+            background: var(--stroke);
+            opacity: 1;
+            margin: 1.25rem 0;
+          "
+        />
+
+        <p class="fw-semibold">What control is missing?</p>
+
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-outline-light quiz3-option">
+            A) Input validation
+          </button>
+          <button class="btn btn-outline-light quiz3-option">
+            B) Session timeout
+          </button>
+          <button
+            class="btn btn-outline-light quiz3-option"
+            data-correct="true"
+          >
+            C) Tamper-evident / protected logging
+          </button>
+          <button class="btn btn-outline-light quiz3-option">
+            D) Rate limiting
+          </button>
+        </div>
+
+        <div class="mt-3" id="quiz3Result"></div>
+      </div>
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="logic.js"></script>
   </body>
 </html>
