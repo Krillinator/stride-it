@@ -4,6 +4,8 @@ An interactive learning experience for understanding the STRIDE threat modeling 
 
 STRIDE IT helps learners explore security threats through short scenarios, quick checks, and mitigation thinking — one letter at a time.
 
+<img width="1355" height="595" alt="Screenshot 2026-02-18 at 21 59 29" src="https://github.com/user-attachments/assets/2372e8f9-9378-4d2f-9b89-456f84f331c5" />
+
 ---
 
 ## What is STRIDE?
