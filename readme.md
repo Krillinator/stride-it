@@ -2,6 +2,9 @@
 
 An interactive learning experience for understanding the STRIDE threat modeling methodology.
 
+
+https://krillinator.github.io/stride-it/
+
 STRIDE IT helps learners explore security threats through short scenarios, quick checks, and mitigation thinking — one letter at a time.
 
 <img width="788" height="363" alt="Screenshot 2026-02-18 at 22 01 39" src="https://github.com/user-attachments/assets/e6bb5bfe-a886-4799-ab8e-8974de662a3c" />
