@@ -31,6 +31,10 @@ It categorizes threats into:
 
 <img width="1355" height="595" alt="Screenshot 2026-02-18 at 21 59 29" src="https://github.com/user-attachments/assets/2372e8f9-9378-4d2f-9b89-456f84f331c5" />
 
+<img width="1302" height="560" alt="Screenshot 2026-02-19 at 18 20 32" src="https://github.com/user-attachments/assets/b84f9412-8ce2-4092-9d5b-d9cf35b52bd4" />
+
+<img width="1312" height="555" alt="Screenshot 2026-02-19 at 18 21 16" src="https://github.com/user-attachments/assets/0fc545c6-c6f5-4fea-b8f0-2b65e3462696" />
+
 ---
 
 ## Learning Goal
@@ -38,7 +42,7 @@ It categorizes threats into:
 Instead of reacting to incidents, STRIDE IT encourages proactive security thinking.
 
 > Don't react. Anticipate.
-
+(This is simulated through static a static webpage)
 ---
 
 ## Tech Stack
