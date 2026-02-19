@@ -344,7 +344,7 @@ const MAX_SAFE_DEPTH = 120 // when limit is ON, reject above this
 const DEGRADE_DEPTH = 160 // where we start calling it "Degraded"
 const DOS_DEPTH = 220 // where we call it "Unresponsive" (win condition)
 
-// track "work" so students see cost
+// track "work" so you see cost
 let jsonWorkUnits = 0
 
 function showLab3(html) {

@@ -171,11 +171,11 @@ if (eye) {
 
     const six = document.createElement("div")
     six.id = "secret6"
-    six.textContent = "6"
+    six.textContent = "6, next /d/index.css"
     six.style.position = "fixed"
     six.style.bottom = "40px"
     six.style.right = "40px"
-    six.style.fontSize = "4rem"
+    six.style.fontSize = "3rem"
     six.style.fontWeight = "800"
     six.style.opacity = "0.8"
     six.style.letterSpacing = "4px"

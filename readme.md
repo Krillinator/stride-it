@@ -21,8 +21,6 @@ It categorizes threats into:
 - **D** — Denial of Service
 - **E** — Elevation of Privilege
 
-
-
 ---
 
 ## Features

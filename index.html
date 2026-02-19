@@ -154,12 +154,49 @@
         An interactive website to better understand STRIDE
       </div>
 
+      <a
+        href="cia/index.html"
+        class="bonus-box text-decoration-none"
+        aria-label="CIA Triad drag and drop"
+      >
+        <div class="d-flex align-items-start justify-content-between gap-3">
+          <div>
+            <div class="bonus-title">
+              <i class="bi bi-shield-lock me-2"></i>
+              Threat Mapping with CIA-Triad
+            </div>
+            <div class="bonus-desc">
+              Drag STRIDE threats into the CIA pillars. The “correct” answer is
+              the reasoning.
+            </div>
+          </div>
+          <div class="bonus-cta">
+            Open <i class="bi bi-arrow-right-short"></i>
+          </div>
+        </div>
+      </a>
+
       <!-- Score -->
       <div class="score-bar">
         <span class="score-label">Progress</span>
         <span class="score-value" id="total-score">0 / 18</span>
       </div>
-      <div id="e-note" class="mt-3 d-none"></div>
+
+      <!-- Progress bar -->
+      <div
+        class="progress score-progress"
+        role="progressbar"
+        aria-label="Overall progress"
+      >
+        <div
+          id="score-progress-bar"
+          class="progress-bar"
+          style="width: 0%"
+          aria-valuemin="0"
+          aria-valuemax="18"
+          aria-valuenow="0"
+        ></div>
+      </div>
 
       <!-- Start over-->
       <div class="row g-3 mt-3">
@@ -169,6 +206,7 @@
             onclick="
               if (confirm('Are you sure you want to start over?')) {
                 localStorage.removeItem('stride_progress_v1')
+                location.reload()
               }
             "
           >
@@ -201,8 +239,14 @@
       const scoreEl = document.getElementById("total-score")
       scoreEl.textContent = `${total} / ${max}`
 
-      const hint = getCompletionHint()
+      const progressBarEl = document.getElementById("score-progress-bar")
+      if (progressBarEl) {
+        const pct = Math.max(0, Math.min(100, (total / max) * 100))
+        progressBarEl.style.width = `${pct}%`
+        progressBarEl.setAttribute("aria-valuenow", String(total))
+      }
 
+      const hint = getCompletionHint()
       if (hint) {
         const secret = document.createElement("div")
         secret.className = "mt-3 small text-center opacity-25"

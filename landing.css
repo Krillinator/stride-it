@@ -281,6 +281,13 @@ body {
   animation: fadeUp 800ms cubic-bezier(0.2, 0.9, 0.2, 1) 220ms forwards;
 }
 
+/* Start state */
+.bonus-box {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 800ms cubic-bezier(0.2, 0.9, 0.2, 1) 520ms forwards;
+}
+
 /* Stagger tiles */
 .stride-tile {
   opacity: 0;
@@ -446,4 +453,67 @@ body {
     opacity: 0.75;
     transform: translateY(1px);
   }
+}
+
+.bonus-box {
+  color: var(--text);
+  display: block;
+  margin-top: 1.5rem;
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  background: rgba(15, 30, 56, 0.35); /* lighter */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 40px rgba(34, 211, 238, 0.08); /* subtle glow */
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.bonus-box:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(192, 132, 252, 0.18);
+}
+
+.bonus-title {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.bonus-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.bonus-cta {
+  white-space: nowrap;
+  font-weight: 800;
+  color: rgba(234, 240, 255, 0.9);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(11, 18, 32, 0.45);
+}
+
+/* Progress bar (Bootstrap) */
+.score-progress {
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.75rem;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid #ffffff1a;
+  backdrop-filter: blur(10px);
+}
+
+.score-progress .progress-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6ee7ff, #7aa2ff, #c084fc);
+  transition: width 300ms ease;
 }

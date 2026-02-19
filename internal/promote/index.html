@@ -417,6 +417,62 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="gateModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content"
+            style="
+              background: #0b1220;
+              color: #eaf0ff;
+              border: 1px solid #ffffff1a;
+            "
+          >
+            <div
+              class="modal-header"
+              style="border-bottom: 1px solid #ffffff1a"
+            >
+              <h5 class="modal-title">Access Gate</h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <input
+                id="gateInput"
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                spellcheck="false"
+                inputmode="numeric"
+              />
+              <div
+                id="gateMsg"
+                class="small mt-2"
+                style="min-height: 1.2em"
+              ></div>
+            </div>
+
+            <div class="modal-footer" style="border-top: 1px solid #ffffff1a">
+              <button
+                type="button"
+                class="btn btn-outline-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-odd" id="gateSubmitBtn">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -576,6 +632,70 @@
 
       boot()
       updateHint()
+    </script>
+
+    <script>
+      const gateModalEl = document.getElementById("gateModal")
+      const gateInput = document.getElementById("gateInput")
+      const gateMsg = document.getElementById("gateMsg")
+      const gateSubmitBtn = document.getElementById("gateSubmitBtn")
+
+      let clicks = 0
+      const TARGET = 100_000
+      let opened = false
+
+      const SECRET = String.fromCharCode(54, 52, 51, 54, 53, 48)
+      const END_MSG = [
+        114, 105, 116, 117, 97, 108, 32, 99, 111, 109, 112, 108, 101, 116, 101,
+        46, 32, 121, 111, 117, 32, 119, 101, 114, 101, 32, 110, 101, 118, 101,
+        114, 32, 111, 119, 110, 101, 114, 46, 32, 97, 99, 99, 101, 115, 115, 32,
+        119, 97, 115, 32, 110, 111, 116, 32, 98, 114, 111, 107, 101, 110, 32,
+        105, 116, 32, 119, 97, 115, 32, 105, 109, 112, 108, 105, 101, 100, 46,
+        32, 83, 84, 82, 73, 68, 69, 58, 32, 83, 32, 97, 110, 100, 32, 69, 32,
+        111, 112, 101, 110, 101, 100, 32, 116, 104, 101, 32, 103, 97, 116, 101,
+        46, 32, 116, 114, 117, 115, 116, 32, 108, 105, 118, 101, 100, 32, 99,
+        108, 105, 101, 110, 116, 45, 115, 105, 100, 101, 46,
+      ]
+        .map((c) => String.fromCharCode(c))
+        .join("")
+
+      function setMood(s) {
+        if (moodPill) moodPill.textContent = s
+      }
+
+      function openGate() {
+        if (opened) return
+        opened = true
+
+        setMood("GATE")
+
+        const modal = bootstrap.Modal.getOrCreateInstance(gateModalEl)
+        modal.show()
+
+        gateMsg.textContent = ""
+        gateInput.value = ""
+        gateInput.focus()
+      }
+
+      sigilBtn.addEventListener("click", () => {
+        clicks++
+
+        if (clicks % 10_000 === 0) setMood(`${clicks}/${TARGET}`)
+
+        if (clicks >= TARGET) openGate()
+      })
+
+      gateSubmitBtn.addEventListener("click", () => {
+        const v = gateInput.value.trim()
+
+        if (v === SECRET) {
+          gateMsg.textContent = "accepted " + END_MSG
+          gateMsg.className = "small mt-2 text-success"
+        } else {
+          gateMsg.textContent = "denied"
+          gateMsg.className = "small mt-2 text-danger"
+        }
+      })
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

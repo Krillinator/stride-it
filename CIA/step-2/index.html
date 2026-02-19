@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CIA — Drag & Drop Lab (9 scenarios)</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div>
+          <h1 class="title">CIA Impact Lab</h1>
+          <p class="sub">
+            Drag each scenario into the CIA pillar it primarily harms.<br />
+            (Strict mode: one intended answer per card)
+          </p>
+        </div>
+
+        <nav class="nav">
+          <a class="navLink active" href="../index.html">Go back</a>
+          <a class="navLink active" href="../../index.html"
+            >Back to landing page</a
+          >
+        </nav>
+
+        <div class="hud">
+          <div class="pill" id="scorePill">Score: 0 / 9</div>
+          <button class="btn secondary" id="resetBtn">Reset</button>
+        </div>
+      </header>
+
+      <div class="panel">
+        <div class="content">
+          <div class="grid">
+            <!-- LEFT: SCENARIOS -->
+            <section class="card">
+              <h2 class="h">Scenarios (9)</h2>
+              <p class="muted">
+                Think: what gets hurt most? Secrets, correctness, or uptime?
+              </p>
+
+              <div class="bank" id="scenarioBank"></div>
+
+              <div class="toast">
+                <div class="msg" id="toastMsg">Awaiting classification…</div>
+                <div class="mini" id="toastMini">Primary impact only.</div>
+              </div>
+            </section>
+
+            <!-- RIGHT: CIA BUCKETS -->
+            <section class="card">
+              <h2 class="h">CIA Buckets</h2>
+
+              <div class="zones" id="bucketZones"></div>
+
+              <div class="footerNote">
+                <strong>C</strong> = secrets leak (confidentiality)<br />
+                <strong>I</strong> = data becomes untrusted (integrity)<br />
+                <strong>A</strong> = service is unreachable (availability)
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ---------- DATA (9 scenarios) ----------
+      // Strict: one intended CIA bucket each.
+      const SCENARIOS = [
+        {
+          id: "c01",
+          text: "A public API endpoint accidentally returns customers’ SSNs.",
+          cia: "C",
+        },
+        {
+          id: "c02",
+          text: "A misconfigured S3 bucket exposes internal payroll files.",
+          cia: "C",
+        },
+        {
+          id: "c03",
+          text: "Verbose error pages reveal stack traces and API keys.",
+          cia: "C",
+        },
+
+        {
+          id: "c04",
+          text: "Someone changes an invoice amount during transit.",
+          cia: "I",
+        },
+        {
+          id: "c05",
+          text: "An employee edits HR records without approval.",
+          cia: "I",
+        },
+        {
+          id: "c06",
+          text: "A bug lets users change product prices in the database.",
+          cia: "I",
+        },
+
+        {
+          id: "c07",
+          text: "Bot traffic overwhelms the site; real users can’t load pages.",
+          cia: "A",
+        },
+        {
+          id: "c08",
+          text: "A huge file upload crashes the service repeatedly.",
+          cia: "A",
+        },
+        {
+          id: "c09",
+          text: "A missing rate limit causes the login endpoint to time out.",
+          cia: "A",
+        },
+      ]
+
+      const CIA_BUCKETS = [
+        {
+          key: "C",
+          title: "C — Confidentiality",
+          hint: "Secrets exposed / data leak",
+        },
+        {
+          key: "I",
+          title: "I — Integrity",
+          hint: "Data modified / untrustworthy",
+        },
+        { key: "A", title: "A — Availability", hint: "Downtime / disruption" },
+      ]
+
+      // ---------- STATE ----------
+      const placed = new Map() // scenarioId -> ciaKey
+
+      // ---------- DOM ----------
+      const bankEl = document.getElementById("scenarioBank")
+      const zonesEl = document.getElementById("bucketZones")
+      const scorePill = document.getElementById("scorePill")
+      const toastMsg = document.getElementById("toastMsg")
+      const toastMini = document.getElementById("toastMini")
+      const resetBtn = document.getElementById("resetBtn")
+
+      // ---------- HELPERS ----------
+      function setToast(msg, mini = "") {
+        toastMsg.textContent = msg
+        toastMini.textContent = mini || " "
+      }
+
+      function score() {
+        let ok = 0
+        for (const s of SCENARIOS) {
+          const picked = placed.get(s.id)
+          if (picked && picked === s.cia) ok++
+        }
+        return ok
+      }
+
+      function updateHUD() {
+        scorePill.textContent = `Score: ${score()} / 9`
+      }
+
+      function sploosh(area, clientX, clientY, isOk) {
+        const r = area.getBoundingClientRect()
+        const x = clientX - r.left
+        const y = clientY - r.top
+
+        const splash = document.createElement("span")
+        splash.className = `sploosh ${isOk ? "ok" : "bad"}`
+        splash.style.left = `${x}px`
+        splash.style.top = `${y}px`
+        area.appendChild(splash)
+
+        const zone = area.closest(".zone")
+        if (zone) {
+          zone.classList.remove("pulse-ok", "pulse-bad")
+          // restart animation reliably:
+          void zone.offsetWidth
+          zone.classList.add(isOk ? "pulse-ok" : "pulse-bad")
+          zone.addEventListener(
+            "animationend",
+            () => zone.classList.remove("pulse-ok", "pulse-bad"),
+            { once: true },
+          )
+        }
+
+        splash.addEventListener("animationend", () => splash.remove())
+      }
+
+      function makeCard(s) {
+        const el = document.createElement("div")
+        el.className = "scenario"
+        el.draggable = true
+        el.dataset.sid = s.id
+        el.innerHTML = `
+          <div class="k">
+            <div class="name">${s.id.toUpperCase()}</div>
+            <div class="tag">drag</div>
+          </div>
+          <div class="desc">${s.text}</div>
+        `
+
+        el.addEventListener("dragstart", (e) => {
+          e.dataTransfer.setData("text/plain", s.id)
+          e.dataTransfer.effectAllowed = "move"
+          setToast(`Picked up ${s.id}.`, "Drop it into C, I, or A.")
+        })
+
+        return el
+      }
+
+      function renderBank() {
+        bankEl.innerHTML = ""
+        for (const s of SCENARIOS) {
+          if (placed.has(s.id)) continue
+          bankEl.appendChild(makeCard(s))
+        }
+      }
+
+      function renderBuckets() {
+        zonesEl.innerHTML = ""
+
+        for (const b of CIA_BUCKETS) {
+          const zone = document.createElement("section")
+          zone.className = "zone"
+          zone.dataset.bucket = b.key
+          zone.innerHTML = `
+            <div class="zoneTitle">
+              <div class="big">${b.title}</div>
+              <div class="badge">${b.key}</div>
+            </div>
+            <div class="dropHint">${b.hint}</div>
+            <div class="dropArea" data-drop="${b.key}"></div>
+          `
+          zonesEl.appendChild(zone)
+        }
+
+        zonesEl.querySelectorAll("[data-drop]").forEach((area) => {
+          const zone = area.closest(".zone")
+
+          area.addEventListener("dragover", (e) => e.preventDefault())
+          area.addEventListener("dragenter", () =>
+            zone?.classList.add("dragover"),
+          )
+          area.addEventListener("dragleave", () =>
+            zone?.classList.remove("dragover"),
+          )
+
+          area.addEventListener("drop", (e) => {
+            e.preventDefault()
+            zone?.classList.remove("dragover")
+
+            const sid = e.dataTransfer.getData("text/plain")
+            const card = document.querySelector(`[data-sid="${sid}"]`)
+            if (!sid || !card) return
+
+            const bucket = area.dataset.drop
+            placed.set(sid, bucket)
+            area.appendChild(card)
+
+            const s = SCENARIOS.find((x) => x.id === sid)
+            const ok = !!(s && bucket === s.cia)
+
+            sploosh(area, e.clientX, e.clientY, ok)
+
+            setToast(
+              ok ? "Accepted." : "Not quite.",
+              ok
+                ? "Nice. Next one."
+                : "What gets hit most: secrecy, correctness, or uptime?",
+            )
+
+            updateHUD()
+            renderBank()
+
+            if (score() === 9) {
+              setToast(
+                "CIA complete.",
+                "Now explain why each one belongs where it does.",
+              )
+            }
+          })
+        })
+      }
+
+      function resetAll() {
+        placed.clear()
+        setToast("Awaiting classification…", "Primary impact only.")
+        renderBuckets()
+        renderBank()
+        updateHUD()
+      }
+
+      resetBtn.addEventListener("click", resetAll)
+
+      resetAll()
+    </script>
+  </body>
+</html>

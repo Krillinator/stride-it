@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CIA x STRIDE — Drag & Drop Lab</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <div class="wrap">
+      <!-- HEADER / HUD -->
+
+      <header class="top">
+        <div>
+          <h1 class="title">Threat Classification Lab</h1>
+          <p class="sub">
+            Step 1: Match scenarios to STRIDE.<br />
+            Step 2: Map them to CIA impact.
+          </p>
+        </div>
+
+        <nav class="nav">
+          <a class="navLink active" href="../../index.html"
+            >Back to landing page</a
+          >
+          <a class="navLink" href="step-2/index.html">CIA-only (9)</a>
+        </nav>
+
+        <div class="hud">
+          <div class="pill" id="stepPill">Step 1/2 — STRIDE</div>
+          <div class="pill" id="scorePill">Score: 0 / 20</div>
+          <button class="btn secondary" id="resetBtn">Reset</button>
+        </div>
+      </header>
+
+      <!-- MAIN GAME PANEL -->
+      <div class="panel">
+        <div class="content">
+          <div class="grid">
+            <!-- LEFT COLUMN: SCENARIOS -->
+            <section class="card">
+              <h2 class="h">Scenarios</h2>
+              <p class="muted">Drag each scenario into the correct bucket.</p>
+
+              <div class="bank" id="scenarioBank"></div>
+
+              <div class="toast">
+                <div class="msg" id="toastMsg">Awaiting classification…</div>
+                <div class="mini" id="toastMini">
+                  Focus on the attacker’s action.
+                </div>
+              </div>
+            </section>
+
+            <!-- RIGHT COLUMN: BUCKETS -->
+            <section class="card">
+              <h2 class="h" id="bucketTitle">STRIDE Buckets</h2>
+
+              <div class="zones" id="bucketZones">
+                <!-- NOTE: initial static zones can stay, but JS will replace them on init via renderBuckets() -->
+                <div class="zone" data-bucket="S">
+                  <div class="zoneTitle">
+                    <div class="big">S — Spoofing</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="T">
+                  <div class="zoneTitle">
+                    <div class="big">T — Tampering</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="R">
+                  <div class="zoneTitle">
+                    <div class="big">R — Repudiation</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="I">
+                  <div class="zoneTitle">
+                    <div class="big">I — Information Disclosure</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="D">
+                  <div class="zoneTitle">
+                    <div class="big">D — Denial of Service</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="E">
+                  <div class="zoneTitle">
+                    <div class="big">E — Elevation of Privilege</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <!-- STEP 2 (CIA) can replace these dynamically later -->
+                <!--
+                <div class="zone" data-bucket="C">
+                  <div class="zoneTitle">
+                    <div class="big">C — Confidentiality</div>
+                    <div class="badge">hide it</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="I">
+                  <div class="zoneTitle">
+                    <div class="big">I — Integrity</div>
+                    <div class="badge">trust it</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+
+                <div class="zone" data-bucket="A">
+                  <div class="zoneTitle">
+                    <div class="big">A — Availability</div>
+                    <div class="badge">reach it</div>
+                  </div>
+                  <div class="dropArea"></div>
+                </div>
+                -->
+              </div>
+
+              <div class="footerNote">
+                STRIDE identifies <em>how</em> the attack happens.<br />
+                CIA identifies <em>what</em> gets hurt.
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ---------- DATA (20 scenarios) ----------
+      const SCENARIOS = [
+        {
+          id: "p01",
+          text: "Attacker logs in using a stolen session cookie.",
+          stride: "S",
+          cia: ["C"],
+        },
+        {
+          id: "p02",
+          text: "Someone changes an invoice amount in transit.",
+          stride: "T",
+          cia: ["I"],
+        },
+        {
+          id: "p03",
+          text: "Admin claims they never approved a refund; logs are missing.",
+          stride: "R",
+          cia: ["I"],
+        },
+        {
+          id: "p04",
+          text: "Public endpoint returns SSNs in the JSON response.",
+          stride: "I",
+          cia: ["C"],
+        },
+        {
+          id: "p05",
+          text: "Bot traffic makes the service unusable for real users.",
+          stride: "D",
+          cia: ["A"],
+        },
+        {
+          id: "p06",
+          text: "User finds a way to access /admin without being admin.",
+          stride: "E",
+          cia: ["I", "C"],
+        },
+        {
+          id: "p07",
+          text: "Attacker resets password using leaked reset tokens.",
+          stride: "I",
+          cia: ["C"],
+        },
+        {
+          id: "p08",
+          text: "A user edits their role in a client-side JWT payload.",
+          stride: "T",
+          cia: ["I", "C"],
+        },
+        {
+          id: "p09",
+          text: "No audit trail for data deletion actions.",
+          stride: "R",
+          cia: ["I"],
+        },
+        {
+          id: "p10",
+          text: "Phisher impersonates IT and collects credentials.",
+          stride: "S",
+          cia: ["C"],
+        },
+        {
+          id: "p11",
+          text: "Rate limit missing; login endpoint can be hammered.",
+          stride: "D",
+          cia: ["A"],
+        },
+        {
+          id: "p12",
+          text: "Employee modifies HR record without authorization.",
+          stride: "T",
+          cia: ["I"],
+        },
+        {
+          id: "p13",
+          text: "Error page reveals stack traces and secrets.",
+          stride: "I",
+          cia: ["C"],
+        },
+        {
+          id: "p14",
+          text: "User denies submitting a contract because actions aren’t signed.",
+          stride: "R",
+          cia: ["I"],
+        },
+        {
+          id: "p15",
+          text: "Low-priv user can change pricing rules.",
+          stride: "E",
+          cia: ["I"],
+        },
+        {
+          id: "p16",
+          text: "Attacker uses someone else’s badge to enter the office.",
+          stride: "S",
+          cia: ["C"],
+        },
+        {
+          id: "p17",
+          text: "Configuration file is altered on the server.",
+          stride: "T",
+          cia: ["I", "A"],
+        },
+        {
+          id: "p18",
+          text: "Database dump endpoint exposed in staging.",
+          stride: "I",
+          cia: ["C"],
+        },
+        {
+          id: "p19",
+          text: "Service crashes from large payload uploads.",
+          stride: "D",
+          cia: ["A"],
+        },
+        {
+          id: "p20",
+          text: "User escalates from viewer to editor by changing an ID param.",
+          stride: "E",
+          cia: ["I"],
+        },
+      ]
+
+      // ---------- CONFIG ----------
+      const STRIDE_BUCKETS = [
+        {
+          key: "S",
+          title: "S — Spoofing",
+          hint: "Impersonation / identity deception",
+        },
+        { key: "T", title: "T — Tampering", hint: "Unauthorized modification" },
+        {
+          key: "R",
+          title: "R — Repudiation",
+          hint: "No traceability / deny actions",
+        },
+        {
+          key: "I",
+          title: "I — Information Disclosure",
+          hint: "Leaks / exposure",
+        },
+        {
+          key: "D",
+          title: "D — Denial of Service",
+          hint: "Disruption / downtime",
+        },
+        {
+          key: "E",
+          title: "E — Elevation of Privilege",
+          hint: "Gain higher permissions",
+        },
+      ]
+
+      const CIA_BUCKETS = [
+        { key: "C", title: "C — Confidentiality", hint: "Keep secrets secret" },
+        { key: "I", title: "I — Integrity", hint: "Keep data correct" },
+        { key: "A", title: "A — Availability", hint: "Keep systems reachable" },
+      ]
+
+      // ---------- STATE ----------
+      let step = 1 // 1 = STRIDE, 2 = CIA
+      const placedStride = new Map() // scenarioId -> strideKey
+      const placedCia = new Map() // scenarioId -> ciaKey
+
+      // ---------- DOM ----------
+      const bankEl = document.getElementById("scenarioBank")
+      const zonesEl = document.getElementById("bucketZones")
+      const stepPill = document.getElementById("stepPill")
+      const scorePill = document.getElementById("scorePill")
+      const toastMsg = document.getElementById("toastMsg")
+      const toastMini = document.getElementById("toastMini")
+      const bucketTitle = document.getElementById("bucketTitle")
+      const resetBtn = document.getElementById("resetBtn")
+
+      // ---------- HELPERS ----------
+      function setToast(msg, mini = "") {
+        toastMsg.textContent = msg
+        toastMini.textContent = mini || " "
+      }
+
+      function scoreForStep() {
+        if (step === 1) {
+          let ok = 0
+          for (const s of SCENARIOS) {
+            const picked = placedStride.get(s.id)
+            if (picked && picked === s.stride) ok++
+          }
+          return ok
+        } else {
+          let ok = 0
+          for (const s of SCENARIOS) {
+            const picked = placedCia.get(s.id)
+            if (picked && s.cia.includes(picked)) ok++
+          }
+          return ok
+        }
+      }
+
+      function updateHUD() {
+        const ok = scoreForStep()
+        scorePill.textContent = `Score: ${ok}/20`
+
+        if (step === 1) {
+          stepPill.textContent = "Step 1/2: Match scenarios → STRIDE"
+          bucketTitle.textContent = "STRIDE Buckets"
+        } else {
+          stepPill.textContent = "Step 2/2: Match scenarios → CIA"
+          bucketTitle.textContent = "CIA Buckets"
+        }
+      }
+
+      function sploosh(area, clientX, clientY, isOk) {
+        const r = area.getBoundingClientRect()
+        const x = clientX - r.left
+        const y = clientY - r.top
+
+        const splash = document.createElement("span")
+        splash.className = `sploosh ${isOk ? "ok" : "bad"}`
+        splash.style.left = `${x}px`
+        splash.style.top = `${y}px`
+
+        area.appendChild(splash)
+
+        // zone pulse (optional)
+        const zone = area.closest(".zone")
+        if (zone) {
+          zone.classList.remove("pulse-ok", "pulse-bad")
+          zone.classList.add(isOk ? "pulse-ok" : "pulse-bad")
+          setTimeout(() => zone.classList.remove("pulse-ok", "pulse-bad"), 980)
+        }
+
+        splash.addEventListener("animationend", () => splash.remove())
+      }
+
+      function makeScenarioCard(s) {
+        const el = document.createElement("div")
+        el.className = "stride"
+        el.draggable = true
+        el.dataset.sid = s.id
+        el.innerHTML = `
+          <div class="k">
+            <div class="name">${s.id.toUpperCase()}</div>
+            <div class="tag">drag</div>
+          </div>
+          <div class="desc">${s.text}</div>
+        `
+
+        el.addEventListener("dragstart", (e) => {
+          e.dataTransfer.setData("text/plain", s.id)
+          e.dataTransfer.effectAllowed = "move"
+          setToast("Picked up " + s.id, "Drop it into a bucket.")
+        })
+
+        return el
+      }
+
+      function renderBank() {
+        bankEl.innerHTML = ""
+        for (const s of SCENARIOS) {
+          // in step 2, keep them in the bank until they were correctly STRIDE-matched
+          if (step === 2) {
+            const stridePick = placedStride.get(s.id)
+            if (stridePick !== s.stride) continue
+          }
+
+          // hide already placed in this step
+          const alreadyPlaced =
+            step === 1 ? placedStride.has(s.id) : placedCia.has(s.id)
+          if (alreadyPlaced) continue
+
+          bankEl.appendChild(makeScenarioCard(s))
+        }
+      }
+
+      function renderBuckets() {
+        zonesEl.innerHTML = ""
+        const buckets = step === 1 ? STRIDE_BUCKETS : CIA_BUCKETS
+
+        for (const b of buckets) {
+          const zone = document.createElement("section")
+          zone.className = "zone"
+          zone.dataset.bucket = b.key
+          zone.innerHTML = `
+            <div class="zoneTitle">
+              <div class="big">${b.title}</div>
+              <div class="badge">${b.key}</div>
+            </div>
+            <div class="dropHint">${b.hint}</div>
+            <div class="dropArea" data-drop="${b.key}"></div>
+          `
+          zonesEl.appendChild(zone)
+        }
+
+        // attach drop handlers
+        zonesEl.querySelectorAll("[data-drop]").forEach((area) => {
+          const zone = area.closest(".zone")
+
+          area.addEventListener("dragover", (e) => e.preventDefault())
+
+          // optional: show hover outline on the zone
+          area.addEventListener("dragenter", () =>
+            zone?.classList.add("dragover"),
+          )
+          area.addEventListener("dragleave", () =>
+            zone?.classList.remove("dragover"),
+          )
+
+          area.addEventListener("drop", (e) => {
+            e.preventDefault()
+            zone?.classList.remove("dragover")
+
+            const sid = e.dataTransfer.getData("text/plain")
+            const card = document.querySelector(`[data-sid="${sid}"]`)
+            if (!sid || !card) return
+
+            const bucket = area.dataset.drop
+
+            if (step === 1) {
+              placedStride.set(sid, bucket)
+              area.appendChild(card)
+
+              const s = SCENARIOS.find((x) => x.id === sid)
+              const ok = !!(s && bucket === s.stride)
+
+              // ✅ sploosh feedback
+              sploosh(area, e.clientX, e.clientY, ok)
+
+              setToast(
+                ok ? "Accepted." : "Not quite.",
+                ok
+                  ? "Good. Move on."
+                  : "Think: what action is the attacker performing?",
+              )
+            } else {
+              placedCia.set(sid, bucket)
+              area.appendChild(card)
+
+              const s = SCENARIOS.find((x) => x.id === sid)
+              const ok = !!(s && s.cia.includes(bucket))
+
+              // ✅ sploosh feedback
+              sploosh(area, e.clientX, e.clientY, ok)
+
+              setToast(
+                ok ? "Accepted." : "Arguable… but not intended.",
+                ok
+                  ? "Good. Next scenario."
+                  : "Which CIA pillar takes the primary hit?",
+              )
+            }
+
+            updateHUD()
+            renderBank()
+
+            // Step transitions
+            if (step === 1 && scoreForStep() === 20) {
+              step = 2
+              setToast(
+                "Step 1 complete.",
+                "Now map the SAME scenarios to CIA impact.",
+              )
+              updateHUD()
+              renderBuckets()
+              renderBank()
+            }
+
+            if (step === 2 && scoreForStep() === 20) {
+              setToast(
+                "Ritual complete.",
+                "CIA protected. STRIDE understood. Explain your reasoning.",
+              )
+            }
+          })
+        })
+      }
+
+      function resetAll() {
+        step = 1
+        placedStride.clear()
+        placedCia.clear()
+        setToast(
+          "Awaiting classification…",
+          "Step 1: match scenarios to STRIDE.",
+        )
+        updateHUD()
+        renderBuckets()
+        renderBank()
+      }
+
+      resetBtn?.addEventListener("click", resetAll)
+
+      // init
+      resetAll()
+    </script>
+  </body>
+</html>
