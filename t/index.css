@@ -12,6 +12,10 @@
   --accentGlow: #ffb84a;
 }
 
+html {
+  background-color: var(--bg1);
+}
+
 body {
   min-height: 100vh;
   color: var(--text);

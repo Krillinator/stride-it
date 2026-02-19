@@ -1,0 +1,583 @@
+<!-- /internal/promote/index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>/internal/promote</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg0: #040816;
+        --bg1: #061226;
+        --text: #eaf0ff;
+        --muted: #9fb3d9;
+        --a1: #c084fc;
+        --a2: #22d3ee;
+        --stroke: #ffffff1a;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background:
+          radial-gradient(
+            1200px 600px at 20% 10%,
+            rgba(192, 132, 252, 0.12) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 500px at 85% 30%,
+            rgba(34, 211, 238, 0.1) 0%,
+            transparent 55%
+          ),
+          linear-gradient(160deg, var(--bg0), var(--bg1));
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      .wrap {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 3rem 1rem;
+      }
+
+      .panel {
+        width: min(920px, 100%);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(15, 30, 56, 0.72), #070f22aa);
+        box-shadow: 0 20px 60px #00000066;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before {
+        content: "";
+        position: absolute;
+        inset: -80px;
+        background: conic-gradient(
+          from 180deg,
+          rgba(192, 132, 252, 0.22),
+          rgba(34, 211, 238, 0.12),
+          rgba(249, 115, 22, 0.08),
+          rgba(192, 132, 252, 0.22)
+        );
+        filter: blur(30px);
+        opacity: 0.6;
+        animation: swirl 9s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes swirl {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .content {
+        position: relative;
+        padding: 2rem 2rem 1.5rem;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .title {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: baseline;
+      }
+
+      .sig {
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .glitch {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        position: relative;
+        display: inline-block;
+        text-shadow: 0 0 18px rgba(192, 132, 252, 0.25);
+      }
+
+      .glitch::before,
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0.75;
+        clip-path: inset(0 0 0 0);
+        pointer-events: none;
+      }
+
+      .glitch::before {
+        transform: translate(1px, -1px);
+        color: var(--a2);
+        animation: glitchTop 2.8s infinite linear;
+        mix-blend-mode: screen;
+      }
+
+      .glitch::after {
+        transform: translate(-1px, 1px);
+        color: var(--a1);
+        animation: glitchBot 2.2s infinite linear;
+        mix-blend-mode: screen;
+      }
+
+      @keyframes glitchTop {
+        0% {
+          clip-path: inset(0 0 85% 0);
+        }
+        10% {
+          clip-path: inset(0 0 55% 0);
+        }
+        20% {
+          clip-path: inset(0 0 80% 0);
+        }
+        30% {
+          clip-path: inset(0 0 30% 0);
+        }
+        40% {
+          clip-path: inset(0 0 70% 0);
+        }
+        50% {
+          clip-path: inset(0 0 45% 0);
+        }
+        60% {
+          clip-path: inset(0 0 90% 0);
+        }
+        70% {
+          clip-path: inset(0 0 35% 0);
+        }
+        80% {
+          clip-path: inset(0 0 75% 0);
+        }
+        90% {
+          clip-path: inset(0 0 60% 0);
+        }
+        100% {
+          clip-path: inset(0 0 85% 0);
+        }
+      }
+
+      @keyframes glitchBot {
+        0% {
+          clip-path: inset(80% 0 0 0);
+        }
+        10% {
+          clip-path: inset(50% 0 0 0);
+        }
+        20% {
+          clip-path: inset(72% 0 0 0);
+        }
+        30% {
+          clip-path: inset(35% 0 0 0);
+        }
+        40% {
+          clip-path: inset(65% 0 0 0);
+        }
+        50% {
+          clip-path: inset(45% 0 0 0);
+        }
+        60% {
+          clip-path: inset(78% 0 0 0);
+        }
+        70% {
+          clip-path: inset(30% 0 0 0);
+        }
+        80% {
+          clip-path: inset(60% 0 0 0);
+        }
+        90% {
+          clip-path: inset(52% 0 0 0);
+        }
+        100% {
+          clip-path: inset(80% 0 0 0);
+        }
+      }
+
+      .scanline {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(255, 255, 255, 0.03),
+          transparent
+        );
+        height: 120px;
+        animation: scan 3.8s infinite linear;
+        opacity: 0.55;
+      }
+
+      @keyframes scan {
+        0% {
+          transform: translateY(-160px);
+        }
+        100% {
+          transform: translateY(110%);
+        }
+      }
+
+      .terminal {
+        border: 1px solid var(--stroke);
+        border-radius: 14px;
+        padding: 1rem;
+        background: rgba(11, 18, 32, 0.55);
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      .caret {
+        display: inline-block;
+        width: 8px;
+        height: 1.05em;
+        background: rgba(234, 240, 255, 0.85);
+        vertical-align: text-bottom;
+        margin-left: 4px;
+        animation: blink 0.9s infinite steps(2, end);
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .noise {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+      }
+
+      .keycaps {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+      }
+
+      .keycap {
+        border: 1px solid var(--stroke);
+        border-radius: 10px;
+        padding: 0.35rem 0.6rem;
+        background: rgba(11, 18, 32, 0.55);
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .reveal {
+        border: 1px dashed rgba(234, 240, 255, 0.22);
+        border-radius: 14px;
+        padding: 1rem;
+        background: rgba(11, 18, 32, 0.35);
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .pill {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(11, 18, 32, 0.55);
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+
+      .btn-odd {
+        background: linear-gradient(
+          90deg,
+          rgba(192, 132, 252, 0.8),
+          rgba(34, 211, 238, 0.7)
+        );
+        border: 0;
+        color: #061226;
+        font-weight: 800;
+      }
+
+      .btn-odd:active {
+        transform: translateY(1px);
+      }
+
+      .smallnote {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="panel">
+        <div class="noise"></div>
+        <div class="scanline"></div>
+
+        <div class="content">
+          <div class="title">
+            <div>
+              <div class="glitch h3 mb-1" data-text="/internal/promote">
+                /internal/promote
+              </div>
+              <div class="muted">
+                endpoint:
+                <span class="sig">unstable · staging · do-not-index</span>
+              </div>
+            </div>
+            <span class="pill" id="moodPill">IDLE</span>
+          </div>
+
+          <hr
+            class="border-0"
+            style="
+              height: 1px;
+              background: var(--stroke);
+              opacity: 1;
+              margin: 1.25rem 0;
+            "
+          />
+
+          <div class="row g-3">
+            <div class="col-lg-7">
+              <div class="terminal" id="term">
+                <div class="muted small mb-2">interactive console</div>
+                <div id="termLines"></div>
+                <div class="small mt-2">
+                  <span class="muted">hint:</span> hold
+                  <span class="keycap">SHIFT</span> and click the
+                  <span class="keycap">sigil</span> three times.
+                  <span class="caret"></span>
+                </div>
+              </div>
+
+              <div class="keycaps">
+                <div class="keycap">SHIFT + Click</div>
+                <div class="keycap">3 pulses</div>
+                <div class="keycap">cache-safe</div>
+                <div class="keycap">no logs</div>
+              </div>
+            </div>
+
+            <div class="col-lg-5">
+              <div class="reveal">
+                <div>
+                  <div class="fw-semibold mb-1">Sigil</div>
+                  <div class="smallnote">
+                    “Some endpoints respond only to the right ritual.”
+                  </div>
+                </div>
+                <button class="btn btn-odd btn-sm px-3" id="sigilBtn">◈</button>
+              </div>
+
+              <div class="mt-3 reveal">
+                <div style="min-width: 0">
+                  <div class="fw-semibold mb-1">Payload</div>
+                  <div class="smallnote" id="payloadHint">
+                    locked (requires 3 pulses)
+                  </div>
+                </div>
+                <button
+                  class="btn btn-outline-light btn-sm"
+                  id="copyBtn"
+                  disabled
+                >
+                  Copy
+                </button>
+              </div>
+
+              <div class="mt-3 smallnote">
+                If this page feels wrong, good. That’s the point.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const raw = localStorage.getItem("eop_user")
+
+      if (!raw) {
+        window.location.href = "/"
+      } else {
+        const user = JSON.parse(raw)
+        const role = user?.profile?.security?.claims?.access?.level
+
+        if (role !== "owner") {
+          window.location.href = "/"
+        }
+      }
+    </script>
+
+    <script>
+      const PAYLOAD = "Z29vZCBqb2I="
+      const termLines = document.getElementById("termLines")
+      const sigilBtn = document.getElementById("sigilBtn")
+      const moodPill = document.getElementById("moodPill")
+      const payloadHint = document.getElementById("payloadHint")
+      const copyBtn = document.getElementById("copyBtn")
+
+      let shiftDown = false
+      let pulses = 0
+      let unlocked = false
+
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+      function line(text, cls = "muted") {
+        const d = document.createElement("div")
+        d.className = cls
+        d.textContent = text
+        termLines.appendChild(d)
+        termLines.scrollTop = termLines.scrollHeight
+      }
+
+      async function typeLine(text, cls = "muted", jitter = 10) {
+        const d = document.createElement("div")
+        d.className = cls
+        termLines.appendChild(d)
+        for (const ch of text) {
+          d.textContent += ch
+          if (Math.random() < 0.03) await sleep(30 + Math.random() * 90)
+          await sleep(jitter + Math.random() * jitter)
+        }
+        termLines.scrollTop = termLines.scrollHeight
+      }
+
+      function setMood(s) {
+        moodPill.textContent = s
+      }
+
+      function glitchOnce() {
+        document.body.style.filter =
+          "hue-rotate(" + (Math.random() * 24 - 12) + "deg)"
+        setTimeout(() => (document.body.style.filter = ""), 120)
+      }
+
+      async function boot() {
+        setMood("BOOT")
+        await typeLine("handshake: pending…", "muted")
+        await sleep(200)
+        await typeLine("staging flag: TRUE", "muted")
+        await sleep(150)
+        await typeLine("audit: disabled", "muted")
+        await sleep(160)
+        await typeLine("note: privilege is a story we tell ourselves.", "muted")
+        await sleep(160)
+        setMood("IDLE")
+      }
+
+      function updateHint() {
+        if (unlocked) {
+          payloadHint.innerHTML = `unlocked: <code style="color:#eaf0ff;background:#0b122055;padding:.1rem .35rem;border-radius:.35rem;border:1px solid rgba(255,255,255,.12)">${PAYLOAD}</code>`
+          copyBtn.disabled = false
+          return
+        }
+        payloadHint.textContent = `locked (requires ${Math.max(0, 3 - pulses)} more pulse${pulses === 2 ? "" : "s"})`
+      }
+
+      function pulse() {
+        pulses++
+        glitchOnce()
+        setMood("PULSE " + pulses + "/3")
+
+        // make it feel "hacky"
+        const phrases = [
+          "tick: entropy++",
+          "cache: warm",
+          "gate: listening",
+          "trace: none",
+          "sigil: accepted",
+        ]
+        line(
+          "> " + phrases[Math.floor(Math.random() * phrases.length)],
+          "muted",
+        )
+
+        if (pulses >= 3) {
+          unlocked = true
+          setMood("UNLOCKED")
+          line("> payload released", "text-success")
+          updateHint()
+        } else {
+          updateHint()
+          setTimeout(() => setMood("IDLE"), 450)
+        }
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Shift") shiftDown = true
+      })
+      window.addEventListener("keyup", (e) => {
+        if (e.key === "Shift") shiftDown = false
+      })
+
+      sigilBtn.addEventListener("click", async () => {
+        if (unlocked) return
+
+        if (!shiftDown) {
+          setMood("NOPE")
+          line("> rejected: missing SHIFT ritual", "text-warning")
+          await sleep(200)
+          setMood("IDLE")
+          return
+        }
+
+        // tiny delay to feel like "something is happening"
+        setMood("WORK")
+        await sleep(90 + Math.random() * 140)
+        pulse()
+      })
+
+      copyBtn.addEventListener("click", async () => {
+        if (!unlocked) return
+        try {
+          await navigator.clipboard.writeText(PAYLOAD)
+          line("> copied to clipboard", "text-success")
+        } catch {
+          line("> copy failed (clipboard blocked)", "text-warning")
+        }
+      })
+
+      // Extra oddity: subtle background “drift”
+      setInterval(() => {
+        const dx = (Math.random() * 2 - 1) * 2
+        const dy = (Math.random() * 2 - 1) * 2
+        document.querySelector(".panel").style.transform =
+          `translate(${dx}px, ${dy}px)`
+        setTimeout(() => {
+          document.querySelector(".panel").style.transform = ""
+        }, 120)
+      }, 2200)
+
+      boot()
+      updateHint()
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -7,6 +7,10 @@
   --muted: #b8c4e3;
 }
 
+html {
+  background-color: var(--bg1);
+}
+
 body {
   min-height: 100vh;
   color: var(--text);

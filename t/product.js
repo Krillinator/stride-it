@@ -5,6 +5,8 @@ import {
   getTotalScore,
 } from "../progress.js"
 
+const unusedSecret = "4 /r/index.html -> unhide element"
+
 // Ensure localStorage exists
 loadProgress()
 

@@ -13,9 +13,9 @@ const els = {
   totalScore: document.getElementById("totalScore"),
 
   // Status badges
-  lab1Status: document.getElementById("lab1Status"), // base64
-  lab2Status: document.getElementById("lab2Status"), // md5 / debug dump
-  lab3Status: document.getElementById("lab3Status"), // jwt
+  lab1Status: document.getElementById("lab1Status"),
+  lab2Status: document.getElementById("lab2Status"),
+  lab3Status: document.getElementById("lab3Status"),
 
   // Result areas
   lab1Result: document.getElementById("lab1Result"),
@@ -68,14 +68,14 @@ function makeInputLab({ mountEl, placeholder, buttonText, onCheck }) {
 
 // Lab 1
 makeInputLab({
-  mountEl: els.lab2Result,
-  placeholder: "Type the core flaw (e.g. md5)",
+  mountEl: els.lab1Result,
+  placeholder: "insert problem here",
   buttonText: "Submit",
   onCheck: ({ input, feedback }) => {
     const answer = normalize(input.value)
 
     if (answer === "md5") {
-      markSolved("I", 1) // I task index for this lab
+      markSolved("I", 0) // I task index for this lab
       feedback.innerHTML = `
         <div class="alert alert-success mb-0">
           Correct. Exposing hashes/tokens/IPs + using weak hashing (MD5) is a confidentiality failure.
@@ -96,8 +96,8 @@ makeInputLab({
 
 // Lab 2
 makeInputLab({
-  mountEl: els.lab1Result,
-  placeholder: "Decoded password (base64 → plaintext)",
+  mountEl: els.lab2Result,
+  placeholder: "Decoded password",
   buttonText: "Submit",
   onCheck: ({ input, feedback }) => {
     const answer = normalize(input.value)
@@ -111,7 +111,7 @@ makeInputLab({
     ])
 
     if (accepted.has(answer)) {
-      markSolved("I", 0)
+      markSolved("I", 1)
       feedback.innerHTML = `
         <div class="alert alert-success mb-0">
           Correct. Base64 is not encryption — it’s just encoding, so secrets are easily revealed.
@@ -149,6 +149,8 @@ makeInputLab({
       feedback.innerHTML = `
         <div class="alert alert-warning mb-0">
           Wrong. Hint: JWT payloads are readable by clients (base64url). Submit again.
+          Perhaps this site could help
+          <code>https://www.jwt.io/</code>
         </div>
       `
     }
@@ -157,6 +159,31 @@ makeInputLab({
     renderScores()
   },
 })
+
+const eye = document.getElementById("eye")
+
+if (eye) {
+  eye.addEventListener("click", (e) => {
+    if (!e.shiftKey) return
+
+    // Prevent multiple 6's
+    if (document.getElementById("secret6")) return
+
+    const six = document.createElement("div")
+    six.id = "secret6"
+    six.textContent = "6"
+    six.style.position = "fixed"
+    six.style.bottom = "40px"
+    six.style.right = "40px"
+    six.style.fontSize = "4rem"
+    six.style.fontWeight = "800"
+    six.style.opacity = "0.8"
+    six.style.letterSpacing = "4px"
+    six.style.pointerEvents = "none"
+
+    document.body.appendChild(six)
+  })
+}
 
 renderIStatuses()
 renderScores()

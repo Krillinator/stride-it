@@ -15,6 +15,10 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  background-color: linear-gradient(160deg, #0b1220, #0e1a33);
+}
+
 /* Ambient background glow */
 body::before {
   content: "";

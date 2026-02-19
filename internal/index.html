@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Internal Dashboard</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="p-4 bg-dark text-light">
+    <script>
+      // 🔐 Access Guard (simulate server-side authorization)
+
+      const raw = localStorage.getItem("eop_user")
+
+      if (!raw) {
+        window.location.href = "/"
+      }
+
+      const user = JSON.parse(raw)
+      const role = user?.profile?.security?.claims?.access?.level || "guest"
+
+      if (role !== "owner") {
+        // Not authorized → redirect
+        window.location.href = "/"
+      }
+    </script>
+
+    <!-- Only renders if owner -->
+    <div class="container">
+      <h1 class="mb-4">Internal Service Dashboard</h1>
+
+      <div class="card bg-secondary p-3 mb-3">
+        <h5>User Information</h5>
+        <pre id="userDump" class="small"></pre>
+      </div>
+
+      <div class="card bg-secondary p-3 mb-3">
+        <h5>Current Role</h5>
+        <div id="roleLabel" class="fw-bold"></div>
+      </div>
+
+      <div id="adminPanel" class="card bg-danger p-3">
+        <h5>Admin Controls</h5>
+        <p>⚠ You have elevated privileges.</p>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("userDump").textContent = JSON.stringify(
+        user,
+        null,
+        2,
+      )
+
+      document.getElementById("roleLabel").textContent = role
+    </script>
+
+    <script type="module" src="code.js"></script>
+  </body>
+</html>

@@ -64,3 +64,21 @@ export function getTotalScore() {
     0,
   )
 }
+
+export function isAllSolved() {
+  return getTotalScore() >= 18
+}
+
+export function getCompletionHint() {
+  if (!isAllSolved()) return null
+
+  const fragments = ["L3MvaW5kZXguaHRtbA==", "IHNoaWZ0K2NsaWNr", "IHRoZSBTIDN4"]
+
+  const decoded = fragments.map((f) => atob(f)).join("")
+
+  return {
+    level: "hidden",
+    channel: "secret task",
+    payload: decoded,
+  }
+}

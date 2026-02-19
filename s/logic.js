@@ -143,6 +143,50 @@ function getDomain(urlString) {
   }
 }
 
+const __t = document.getElementById("spoofTitle")
+const __e = document.getElementById("sEE")
+
+let __c = 0
+let __lt = 0
+
+function __ignite() {
+  if (!__e) return
+
+  __e.classList.remove("d-none")
+
+  // subtle spoof visual effect
+  document.body.style.filter = "hue-rotate(90deg)"
+  setTimeout(() => {
+    document.body.style.filter = "none"
+  }, 400)
+
+  __e.style.transform = "scale(1.08)"
+  __e.style.transition = "transform 0.2s ease"
+  setTimeout(() => {
+    __e.style.transform = "scale(1)"
+  }, 200)
+}
+
+__t?.addEventListener("click", (ev) => {
+  if (!ev.shiftKey) {
+    __c = 0
+    return
+  }
+
+  const now = Date.now()
+
+  // reset combo if too slow
+  if (now - __lt > 2000) __c = 0
+
+  __c++
+  __lt = now
+
+  if (__c === 3) {
+    __ignite()
+    __c = 0
+  }
+})
+
 function renderSiteStatus() {
   const progress = loadProgress()
   site.status.textContent = progress.S.solved[2] ? "Solved" : "Not solved"

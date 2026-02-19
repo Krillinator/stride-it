@@ -11,6 +11,10 @@
   --accent2: #065f46; /* deep forest */
 }
 
+html {
+  background-color: var(--bg1);
+}
+
 /* Background glow */
 body {
   min-height: 100vh;

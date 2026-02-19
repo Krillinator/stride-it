@@ -9,6 +9,10 @@
   --accent2: #94a3b8; /* slate gray */
 }
 
+html {
+  background-color: var(--bg1);
+}
+
 body {
   min-height: 100vh;
   color: var(--text);
