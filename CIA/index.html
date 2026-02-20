@@ -465,7 +465,7 @@
               const s = SCENARIOS.find((x) => x.id === sid)
               const ok = !!(s && bucket === s.stride)
 
-              // ✅ sploosh feedback
+              // sploosh feedback
               sploosh(area, e.clientX, e.clientY, ok)
 
               setToast(
@@ -481,7 +481,7 @@
               const s = SCENARIOS.find((x) => x.id === sid)
               const ok = !!(s && s.cia.includes(bucket))
 
-              // ✅ sploosh feedback
+              // sploosh feedback
               sploosh(area, e.clientX, e.clientY, ok)
 
               setToast(
