@@ -13,12 +13,12 @@
 
   <body class="p-4 bg-dark text-light">
     <script>
-      // 🔐 Access Guard (simulate server-side authorization)
+      // Access Guard (simulate server-side authorization)
 
       const raw = localStorage.getItem("eop_user")
 
       if (!raw) {
-        window.location.href = "/"
+        window.location.href = "/stride-it/"
       }
 
       const user = JSON.parse(raw)
