@@ -517,3 +517,62 @@ body {
   background: linear-gradient(90deg, #6ee7ff, #7aa2ff, #c084fc);
   transition: width 300ms ease;
 }
+
+/* Modal */
+
+.start-here-card {
+  border: 1px solid var(--stroke);
+  background: rgba(11, 18, 32, 0.45);
+  border-radius: 16px;
+  padding: 0.9rem 1.1rem;
+  max-width: 52ch;
+}
+
+.first-visit-modal {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 27, 52, 0.9),
+    rgba(11, 18, 32, 0.92)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  color: var(--text);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.65);
+}
+
+/* Pills */
+/* Tile score pills */
+.tile-pills {
+  position: relative;
+  z-index: 2; /* ensure above tile ::before glow */
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0.75rem;
+  flex-wrap: wrap;
+}
+
+.badge-soft {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--muted);
+  font-weight: 650;
+  padding: 0.35rem 0.6rem;
+}
+
+/* When 3/3 */
+.badge-soft.is-done {
+  color: rgba(234, 240, 255, 0.95);
+  border-color: rgba(110, 231, 255, 0.35);
+  box-shadow: 0 0 18px rgba(110, 231, 255, 0.12);
+}
+
+.tile-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.tile-header .badge-soft {
+  margin-top: 6px; /* aligns better with the S */
+}

@@ -28,7 +28,11 @@
           </div>
         </div>
 
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <a href="intro/index.html" class="brand-link"
+            >Confused? Begin here!</a
+          >
+
           <a
             href="https://github.com/krillinator"
             target="_blank"
@@ -38,6 +42,61 @@
             <span class="github-text">Krillinator</span>
             <i class="bi bi-github github-icon"></i>
           </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- First visit modal -->
+    <div
+      class="modal fade"
+      id="firstVisitModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content first-visit-modal">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold">Welcome to STRIDE IT!</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body pt-2">
+            <p class="mb-2" style="color: var(--muted)">
+              Hi there, are you new around here? Would you like a beginners
+              walkthrough?
+            </p>
+
+            <div class="d-grid gap-2 pt-4">
+              <a
+                class="btn btn-primary"
+                href="intro/index.html"
+                onclick="
+                  if (document.getElementById('dontShowAgain')?.checked) {
+                    localStorage.setItem('stride_hide_welcome_v1', 'true')
+                  }
+                  localStorage.setItem('stride_first_visit_v1', '1')
+                "
+              >
+                Yes, i'm new
+              </a>
+            </div>
+
+            <div class="form-check mt-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="dontShowAgain"
+              />
+              <label class="form-check-label" for="dontShowAgain">
+                Don’t show this again
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -53,6 +112,7 @@
             thinking.
           </p>
         </div>
+
         <a href="about/index.html" class="col-lg-5 text-decoration-none">
           <div class="hint">
             <div class="fw-semibold mb-1">Why?</div>
@@ -65,8 +125,20 @@
       </div>
 
       <div class="mt-4 mt-lg-5 stride-grid">
-        <a class="stride-tile" href="s/index.html" aria-label="Spoofing">
-          <div class="stride-letter"><span class="main">S</span></div>
+        <!-- S -->
+        <a
+          class="stride-tile"
+          href="s/index.html"
+          aria-label="Spoofing"
+          data-letter="S"
+        >
+          <div class="tile-header">
+            <div class="stride-letter"><span class="main">S</span></div>
+            <span class="badge badge-soft rounded-pill" data-role="tileScore"
+              >S: 0/3</span
+            >
+          </div>
+
           <div class="stride-title">Spoofing</div>
           <p class="stride-desc">
             Identity deception: pretending to be someone/something else.
@@ -77,8 +149,20 @@
           ></i>
         </a>
 
-        <a class="stride-tile" href="t/index.html" aria-label="Tampering">
-          <div class="stride-letter"><span class="main">T</span></div>
+        <!-- T -->
+        <a
+          class="stride-tile"
+          href="t/index.html"
+          aria-label="Tampering"
+          data-letter="T"
+        >
+          <div class="tile-header">
+            <div class="stride-letter"><span class="main">T</span></div>
+            <span class="badge badge-soft rounded-pill" data-role="tileScore"
+              >T: 0/3</span
+            >
+          </div>
+
           <div class="stride-title">Tampering</div>
           <p class="stride-desc">
             Unauthorized modification of data, code, or configuration.
@@ -89,8 +173,20 @@
           ></i>
         </a>
 
-        <a class="stride-tile" href="r/index.html" aria-label="Repudiation">
-          <div class="stride-letter"><span class="main">R</span></div>
+        <!-- R -->
+        <a
+          class="stride-tile"
+          href="r/index.html"
+          aria-label="Repudiation"
+          data-letter="R"
+        >
+          <div class="tile-header">
+            <div class="stride-letter"><span class="main">R</span></div>
+            <span class="badge badge-soft rounded-pill" data-role="tileScore"
+              >R: 0/3</span
+            >
+          </div>
+
           <div class="stride-title">Repudiation</div>
           <p class="stride-desc">
             “It wasn’t me”: missing proof, logging, or traceability.
@@ -101,12 +197,20 @@
           ></i>
         </a>
 
+        <!-- I -->
         <a
           class="stride-tile"
           href="i/index.html"
           aria-label="Information Disclosure"
+          data-letter="I"
         >
-          <div class="stride-letter"><span class="main">I</span></div>
+          <div class="tile-header">
+            <div class="stride-letter"><span class="main">I</span></div>
+            <span class="badge badge-soft rounded-pill" data-role="tileScore"
+              >I: 0/3</span
+            >
+          </div>
+
           <div class="stride-title">Information Disclosure</div>
           <p class="stride-desc">
             Data exposure: leaks, over-sharing, weak access control.
@@ -117,12 +221,20 @@
           ></i>
         </a>
 
+        <!-- D -->
         <a
           class="stride-tile"
           href="d/index.html"
           aria-label="Denial of Service"
+          data-letter="D"
         >
-          <div class="stride-letter"><span class="main">D</span></div>
+          <div class="tile-header">
+            <div class="stride-letter"><span class="main">D</span></div>
+            <span class="badge badge-soft rounded-pill" data-role="tileScore"
+              >D: 0/3</span
+            >
+          </div>
+
           <div class="stride-title">Denial of Service</div>
           <p class="stride-desc">
             Availability attacks: slow, crash, block, exhaust resources.
@@ -133,12 +245,20 @@
           ></i>
         </a>
 
+        <!-- E -->
         <a
           class="stride-tile"
           href="e/index.html"
           aria-label="Elevation of Privilege"
+          data-letter="E"
         >
-          <div class="stride-letter"><span class="main">E</span></div>
+          <div class="tile-header">
+            <div class="stride-letter"><span class="main">E</span></div>
+            <span class="badge badge-soft rounded-pill" data-role="tileScore"
+              >E: 0/3</span
+            >
+          </div>
+
           <div class="stride-title">Elevation of Privilege</div>
           <p class="stride-desc">
             Gaining permissions you shouldn’t have (user → admin).
@@ -206,6 +326,8 @@
             onclick="
               if (confirm('Are you sure you want to start over?')) {
                 localStorage.removeItem('stride_progress_v1')
+                localStorage.removeItem('stride_first_visit_v1')
+                localStorage.removeItem('stride_hide_welcome_v1')
                 location.reload()
               }
             "
@@ -216,22 +338,30 @@
       </div>
     </main>
 
-    <!-- 
-    𓋴𓅱𓂋𓂋𓇌
-    𓆑𓅱𓂋
-    𓏭𓏏𓏏𓂋𓅱𓎼𓏏𓇋𓅱𓂧𓇋𓋴
-    𓇋𓈖
-    𓊪𓂋𓅱𓎼𓂋𓄿𓅓𓅓𓇋𓈖𓎼
-    𓇋
-    𓉔𓄿𓆑𓇌
-    𓎢𓅱𓅓𓅓𓇋𓏏𓏏𓂋𓂋
-    𓇋𓈖
-    𓏭𓏏𓎼𓄿𓃀𓅱𓂋𓄿𓏏𓇋𓅱𓈖
-    -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script type="module">
-      import { getTotalScore, getCompletionHint } from "./progress.js"
+      import {
+        loadProgress,
+        getLetterScore,
+        getTotalScore,
+        getCompletionHint,
+      } from "./progress.js"
+
+      loadProgress()
+
+      // First visit modal logic (optional)
+      const FIRST_VISIT_KEY = "stride_first_visit_v1"
+      const HIDE_WELCOME_KEY = "stride_hide_welcome_v1"
+      const isFirstVisit = !localStorage.getItem(FIRST_VISIT_KEY)
+      const hideWelcome = localStorage.getItem(HIDE_WELCOME_KEY) === "true"
+
+      if (isFirstVisit && !hideWelcome) {
+        const modalEl = document.getElementById("firstVisitModal")
+        if (modalEl) {
+          new bootstrap.Modal(modalEl).show()
+        }
+      }
 
       const total = getTotalScore()
       const max = 18
@@ -246,6 +376,19 @@
         progressBarEl.setAttribute("aria-valuenow", String(total))
       }
 
+      // Update each tile pill
+      document.querySelectorAll(".stride-tile[data-letter]").forEach((tile) => {
+        const letter = tile.dataset.letter
+        const score = getLetterScore(letter) // 0..3
+
+        const pill = tile.querySelector('[data-role="tileScore"]')
+        if (pill) {
+          pill.textContent = `${letter}: ${score}/3`
+          pill.classList.toggle("is-done", score === 3)
+        }
+      })
+
+      // Secret hint
       const hint = getCompletionHint()
       if (hint) {
         const secret = document.createElement("div")

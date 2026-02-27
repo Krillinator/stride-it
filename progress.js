@@ -9,6 +9,26 @@ const DEFAULT_PROGRESS = {
   E: { solved: [false, false, false] },
 }
 
+const FIRST_VISIT_KEY = "stride_first_visit_v1"
+const HIDE_WELCOME_KEY = "stride_hide_welcome_v1"
+const isFirstVisit = !localStorage.getItem(FIRST_VISIT_KEY)
+const hideWelcome = localStorage.getItem(HIDE_WELCOME_KEY) === "true"
+
+if (isFirstVisit) localStorage.setItem(FIRST_VISIT_KEY, "1")
+
+if ((isFirstVisit || !hideWelcome) && !hideWelcome) {
+  const modalEl = document.getElementById("firstVisitModal")
+  if (modalEl) {
+    const modal = new bootstrap.Modal(modalEl, { backdrop: "static" })
+    modal.show()
+
+    modalEl.addEventListener("hidden.bs.modal", () => {
+      const cb = document.getElementById("dontShowAgain")
+      if (cb?.checked) localStorage.setItem(HIDE_WELCOME_KEY, "true")
+    })
+  }
+}
+
 export function loadProgress() {
   const raw = localStorage.getItem(STORAGE_KEY)
 
